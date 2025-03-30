@@ -51,8 +51,13 @@ class MyThread extends Thread
 			{
 				try
 				{
+					// Wait until we may write (initially we are allowed)
+					// coming back here - we must wait for the "Consumer" to read
+					semPro.acquire();
 					Shared.count++; 
 					System.out.println(threadName + " Writes: " + Shared.count); 
+					// Signal the "Consumer" that a value is ready
+					semCon.release();
 					// Now, allowing a context switch -- if possible. 
 					// for thread Consumer to execute 
 					Thread.sleep(10); 
@@ -74,7 +79,19 @@ class MyThread extends Thread
 			System.out.println("Starting " + threadName); 
 			for (int i=0; i< 5; i++)
 			{
+				try
+				{
+					// Waiting for a value to be present (initially: Wait)
+					semCon.acquire();
 					System.out.println(threadName + " Reads: " + Shared.count);
+					// Signal the "Producer" that the value was read, so the buffer is now cleared
+					semPro.release();
+				}
+				catch (InterruptedException exc)
+				{
+					// Should we fail - here we go
+					System.out.println(exc); 
+				} 
 			}
 			// And we are done 
 			System.out.println("Ending " + threadName);
