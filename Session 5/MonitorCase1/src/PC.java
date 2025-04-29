@@ -5,6 +5,7 @@
  *  
  *  Code courtesy of www.csc.villanova.edu/~mdamian/threads/javamonitors.html
  */
+//laver en buffer på 4 objekter, laver en producer og consumer og stopper igen på et tidspunkt. 
 public class PC {
 
 	public static void main(String[] args) {

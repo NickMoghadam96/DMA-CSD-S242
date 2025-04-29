@@ -1,4 +1,6 @@
 // Similar to the Circular buffer example, but with objects
+//læser en fil, og tæller antal ord i filen, spiller ordene i filen
+//og fortæller hvor mange ord som er i fieln. Selve køen vi kører derinde
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
